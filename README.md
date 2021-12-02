@@ -5,7 +5,7 @@ The TSA Client contains two components:
 1. .NET 6 executeable CLI tool
 2. .NET Standard 2.0 library
 
-Using [https://github.com/clairernovotny/BouncyCastle-PCL](BouncyCastle-PCL) it can create a TSQ and validate the TSR (RFC 3161) that comes from a third party SaaS TSA (like [https://freetsa.org](freeTSA.org)).
+Using [BouncyCastle-PCL](https://github.com/clairernovotny/BouncyCastle-PCL) it can create a TSQ and validate the TSR (RFC 3161) that comes from a third party SaaS TSA (like [freeTSA.org](https://freetsa.org)).
 
 ## Basic usage
 
@@ -143,7 +143,7 @@ HttpWebRequest req = (HttpWebRequest)WebRequest.Create("https://freetsa.org/tsr"
 byte[] tsr = TSA.SendRequest(tsq, uri: null, req: req);
 ```
 
-Find a [https://gist.github.com/Manouchehri/fd754e402d98430243455713efada710](list of free TSA servers at GitHub).
+Find a [list of free TSA servers at GitHub](https://gist.github.com/Manouchehri/fd754e402d98430243455713efada710).
 
 ## Changes
 
