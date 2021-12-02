@@ -133,7 +133,7 @@ Per default `SHA512` is used as hash algorithm. All possible hash algorithms (to
 
 Of course the TSA needs to support the chosen hash algorithm, too!
 
-The TSA URI will get the TSQ as `application/timestamp-query` POST http request and needs to response the TSR. If the TSA needs authentication f.e., you can use your own `HttpWebRequest` instance with a pre-configuration (only `ContentType` and `ContentLength` will be set when calling `SendRequest`):
+The TSA URI will get the TSQ as `application/timestamp-query` POST http request and needs to respond the TSR. If the TSA needs authentication f.e., you can use your own `HttpWebRequest` instance with a pre-configuration (only `ContentType` and `ContentLength` will be set when calling `SendRequest`):
 
 ```cs
 // Request the TSR with a custom request object
