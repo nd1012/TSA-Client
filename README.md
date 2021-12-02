@@ -58,19 +58,19 @@ tsac --file source.file --tsr source.tsr --cert /path/to/signer.crt
 TSQ:
 
 ```
-tasc --tsq source.tsq -tsqInfo
+tsac --tsq source.tsq -tsqInfo
 ```
 
 TSR:
 
 ```
-tasc --tsr source.tsr -tsrInfo
+tsac --tsr source.tsr -tsrInfo
 ```
 
 Timestamp token:
 
 ```
-tasc --token source.tst -tokenInfo
+tsac --token source.tst -tokenInfo
 ```
 
 #### Advanced usage
