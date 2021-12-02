@@ -1,0 +1,152 @@
+Usage examples
+~~~~~~~~~~~~~~
+Create TSQ and TSA:
+
+	tsac --file source.file -tsa https://uri.to/tsr --tsq source.tsq --tsr source.tsr
+
+Or:
+
+	tsac --hash abcdef0123456789 -tsa https://uri.to/tsr --tsq source.tsq --tsr source.tsr
+
+This will create, store and validate the TSR, and store the TSQ, too. If the TSQ file exists already, it will be used instead of creating a new one. If TSQ or TSR aren't given, the files won't be created.
+
+If you want to ensure that a new TSQ file will be created, use an additional parameter:
+
+	-newTsq
+
+When using --file and you want to specify the hash algorithm to use (default is SHA512), use an additional parameter:
+
+	--algo sha384
+
+Supported SHA hash algorithms are:
+
+	- sha1
+	- sha256
+	- sha284
+	- sha512
+
+If you don't want to request the signer certificates in the TSR, use an additional parameter:
+
+	-nocert
+
+To save the timestamp token, use an additional parameter:
+
+	--token source.tst
+
+To validate the timestamp token, use an additional parameter:
+
+	--cert signer.crt
+
+To create a TSR from a previously created TSQ:
+
+	tsac --file source.file --tsq source.tsq
+
+Or:
+
+	tsac --hash abcdef0123456789 --tsq source.tsq
+
+To validate a previously created TSQ/TSR:
+
+	tsac --tsq source.tsq --tsr source.tsr
+
+To validate a previously created timestamp token:
+
+	tsac --token source.tst --cert signer.crt
+
+Or:
+
+	tsac --tsr source.tsr --cert signer.crt
+
+To validate the source from a previously created TSR:
+
+	tsac -validateSource --file source.file --tsr source.tsr
+
+Or:
+
+	tsac -validateSource --hash abcdef0123456789 --tsr source.tsr
+
+To validate the source from a previously created timestamp token:
+
+	tsac -validateSource --file source.file --token source.tst
+
+Or:
+
+	tsac -validateSource --hash abcdef0123456789 --token source.tst
+
+To extract the timestamp token from a previously created TSR:
+
+	tsac --tsr source.tsr --token source.tst
+
+All actions may be combined - for example: This call will create a TSR, store the timestamp token and validate the signer certificate:
+
+	tasc --file source.file --tsa https://uri.to/tsr --tsq source.tsq --tsr source.tsr --token source.tst --cert signer.crt
+
+Requested actions will be processed in this order:
+
+	1. Create source file hash
+	2. Create or load TSR (and TSQ)
+	3. Load timestamp token
+	4. Validate TSR
+	5. Extraxt timestamp token from TSR
+	6. Validate source
+	7. Validate timestamp token signer
+	8. Display TSQ/TSR/timestamp token information
+
+NOTE: Existing target files will be overwritten!
+
+Parameter summary
+~~~~~~~~~~~~~~~~~
+--file [filename]
+	Source filename
+
+--hash [hex]
+	Source hash hex string
+
+--algo [algorithm]
+	Hash algorithm to use (sha1|sha256|sha384|sha512)
+
+-nocert
+	Don't include the signer certificates into the TSR
+
+--tsq [filename]
+	TSQ (target) filename
+
+--tsr [filename]
+	TSR (target) filename
+
+--token [filename]
+	(Target) Timestamp token filename
+
+-newTsq
+	Force creating a new TSQ file (the existing file will be deleted)
+
+--cert [filename]
+	Signer X509 certificate filename for timestamp token validation
+
+-validateSource
+	To validate the source file/hash from a TSR or timestamp token
+
+--tsa [uri]
+	TSA URI that will get the TSQ in a POST http request
+
+-tsqInfo
+	Display TSQ information
+
+-tsrInfo
+	Display TSR information
+
+-tokenInfo
+	Display timestamp token information
+
+-?,-h,-H,-help
+	Display this help
+
+Exit code
+~~~~~~~~~
+
+	- 0: Ok
+	- 1: Invalid usage
+	- 2: Invalid data (validation failed f.e.)
+	- 99: Unknown error
+
+Any error will be written to STDERR.
