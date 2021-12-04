@@ -118,7 +118,7 @@ foreach(string info in TSA.TokenInfo(token))
     Console.WriteLine($"Timestamp token: {info}");
 ```
 
-All methods of the `TSA` class are XML documented.
+All methods of the `TSA` class are XML documented. Find the developer reference of the latest release [here](https://nd1012.github.io/TSA-Client/).
 
 ## Good to know
 
