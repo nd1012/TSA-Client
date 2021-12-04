@@ -13,7 +13,45 @@ using System.Security.Cryptography;
 namespace wan24.TSAClient
 {
     /// <summary>
-    /// High level TSA helper (BouncyCastle wrapper)
+    /// High level RFC 3161 TSA client helper methods (<seealso href="https://github.com/clairernovotny/BouncyCastle-PCL">BouncyCastle-PCL</seealso> wrapper)
+    /// These helper methods support a third party SaaS TSA like <seealso href="https://freetsa.org">freeTSA.org</seealso>.
+    /// Find a list of free TSA servers at <seealso href="https://gist.github.com/Manouchehri/fd754e402d98430243455713efada710">GitHub</seealso>.
+    /// Find this open source project at <seealso href="https://github.com/nd1012/TSA-Client">GitHub</seealso>.
+    /// <example>
+    /// Some usage examples:
+    /// <code>
+    /// using wan24.TSAClient;
+    /// 
+    /// // Create a TSQ (using SHA512 and including the signer certificates)
+    /// byte[] tsq = TSA.CreateRequest("source.file");
+    /// 
+    /// // Request the TSR
+    /// byte[] tsr = TSA.SendRequest(tsq, "https://freetsa.org/tsr");
+    /// 
+    /// // Validate the TSR
+    /// TSA.ValidateResponse(tsq, tsr);
+    /// 
+    /// // Validate the source data
+    /// TSA.ValidateSourceTsr("source.file", tsr);
+    /// 
+    /// // Extract the timestamp token
+    /// byte[] token = TSA.ExtractToken(tsr);
+    /// 
+    /// // Validate the source data using the timestamp token
+    /// TSA.ValidateSourceToken("source.file", token);
+    /// 
+    /// // Validate the timestamp token using the X509 signer certificate
+    /// TSA.ValidateToken(token, "/path/to/signer.crt");
+    /// 
+    /// // Get object information
+    /// foreach(string info in TSA.RequestInfo(tsq))
+    ///     Console.WriteLine($"TSQ: {info}");
+    /// foreach(string info in TSA.ResponseInfo(tsr))
+    ///     Console.WriteLine($"TSR: {info}");
+    /// foreach(string info in TSA.TokenInfo(token))
+    ///     Console.WriteLine($"Timestamp token: {info}");
+    /// </code>
+    /// </example>
     /// </summary>
     public static class TSA
     {
@@ -34,7 +72,7 @@ namespace wan24.TSAClient
         /// </summary>
         public const string HASH_SHA512 = "sha512";
         /// <summary>
-        /// Default SHA hash algorithm name
+        /// Default SHA hash algorithm name (SHA512)
         /// </summary>
         public const string DEFAULT_HASH = HASH_SHA512;
         /// <summary>
@@ -55,27 +93,29 @@ namespace wan24.TSAClient
         public const int HASH_SHA512_LEN = 64;
 
         /// <summary>
-        /// BouncyCastle PCL version
+        /// BouncyCastle-PCL version information
         /// </summary>
         private static string _BC_VERSION = null;
 
         /// <summary>
-        /// Get the TSA Client library version
+        /// Get the TSA Client library version information
         /// </summary>
         public static string VERSION => Properties.Resources.VERSION;
 
         /// <summary>
-        /// BouncyCastle PCL version
+        /// BouncyCastle-PCL version information
         /// </summary>
         public static string BC_VERSION =>
             _BC_VERSION ?? (_BC_VERSION = typeof(TimeStampToken).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion);
 
         /// <summary>
-        /// Create a hash from a file
+        /// Create a SHA hash from a file
         /// </summary>
         /// <param name="fileName">Filename</param>
         /// <param name="algorithm">SHA hash algorithm name</param>
         /// <returns>Hash</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
+        /// <exception cref="ArgumentException">Unknown SHA hash algorithm name</exception>
         public static byte[] CreateHash(string fileName, string algorithm = DEFAULT_HASH)
         {
             if (fileName == null) throw new ArgumentNullException(nameof(fileName));
@@ -97,11 +137,13 @@ namespace wan24.TSAClient
         }
 
         /// <summary>
-        /// Create a hash from bytes
+        /// Create a SHA hash from bytes
         /// </summary>
         /// <param name="data">Bytes</param>
         /// <param name="algorithm">SHA hash algorithm name</param>
         /// <returns>Hash</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
+        /// <exception cref="ArgumentException">Unknown SHA hash algorithm name</exception>
         public static byte[] CreateHash(byte[] data, string algorithm = DEFAULT_HASH)
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
@@ -124,10 +166,12 @@ namespace wan24.TSAClient
         /// <summary>
         /// Create a TSQ
         /// </summary>
-        /// <param name="hash">Hash</param>
+        /// <param name="hash">SHA hash</param>
         /// <param name="outFile">Target filename</param>
-        /// <param name="includeCert">Include certificates?</param>
+        /// <param name="includeCert">Include signer certificates?</param>
         /// <returns>TSQ</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
+        /// <exception cref="ArgumentException">Unsupported SHA hash length</exception>
         public static byte[] CreateRequest(byte[] hash, string outFile = null, bool includeCert = true)
         {
             if (hash == null) throw new ArgumentNullException(nameof(hash));
@@ -163,12 +207,13 @@ namespace wan24.TSAClient
         }
 
         /// <summary>
-        /// Send a request (receive a TSR)
+        /// Send a TSQ (receive a TSR)
         /// </summary>
         /// <param name="tsqFile">TSQ filename</param>
-        /// <param name="uri">TSA URI</param>
+        /// <param name="uri">TSA URI (f.e. <c>https://freetsa.org/tsr</c>)</param>
         /// <param name="outFile">Target filename</param>
         /// <returns>TSR</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static byte[] SendRequest(string tsqFile, string uri, string outFile = null)
         {
             if (tsqFile == null) throw new ArgumentNullException(nameof(tsqFile));
@@ -177,13 +222,24 @@ namespace wan24.TSAClient
         }
 
         /// <summary>
-        /// Send a request (receive a TSR)
+        /// Send a TSQ (receive a TSR)
+        /// <example>
+        /// Using a custom request object in <paramref name="req"/>:
+        /// <code>
+        /// // Request the TSR with a custom request object
+        /// using System.Net;
+        /// HttpWebRequest req = (HttpWebRequest)WebRequest.Create("https://freetsa.org/tsr");
+        /// // Configure req here...
+        /// byte[] tsr = TSA.SendRequest(tsq, uri: null, req: req);
+        /// </code>
+        /// </example>
         /// </summary>
         /// <param name="tsq">TSQ</param>
-        /// <param name="uri">TSA URI (or <see langword="null"/>, if <c>req</c> is given)</param>
+        /// <param name="uri">TSA URI (f.e. <c>https://freetsa.org/tsr</c>, or <see langword="null"/>, if <paramref name="req"/> is given)</param>
         /// <param name="outFile">Target filename</param>
-        /// <param name="req">Request to reuse</param>
+        /// <param name="req">Custom request object</param>
         /// <returns>TSR</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static byte[] SendRequest(byte[] tsq, string uri, string outFile = null, HttpWebRequest req = null)
         {
             if (tsq == null) throw new ArgumentNullException(nameof(tsq));
@@ -218,6 +274,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tsqFile">TSQ filename</param>
         /// <param name="tsrFile">TSR filename</param>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static void ValidateResponse(string tsqFile, string tsrFile)
         {
             if (tsqFile == null) throw new ArgumentNullException(nameof(tsqFile));
@@ -230,6 +287,8 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tsqData">TSQ</param>
         /// <param name="tsrData">TSR</param>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
+        /// <exception cref="InvalidDataException">TSA returned an error status code</exception>
         public static void ValidateResponse(byte[] tsqData, byte[] tsrData)
         {
             if (tsqData == null) throw new ArgumentNullException(nameof(tsqData));
@@ -244,6 +303,8 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tsrFile">TSR filename</param>
         /// <param name="fileName">Source filename</param>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
+        /// <exception cref="InvalidDataException">TSA returned an error status code</exception>
         public static void ValidateSourceTsr(string tsrFile, string fileName)
         {
             if (tsrFile == null) throw new ArgumentNullException(nameof(tsrFile));
@@ -254,10 +315,11 @@ namespace wan24.TSAClient
         }
 
         /// <summary>
-        /// Get the hash algorithm from a hash length
+        /// Get the SHA hash algorithm name from a SHA hash length
         /// </summary>
-        /// <param name="len">Hash length</param>
-        /// <returns>Algorithm</returns>
+        /// <param name="len">SHA hash length</param>
+        /// <returns>SHA algorithm name</returns>
+        /// <exception cref="ArgumentException">Unsupported SHA hash length</exception>
         internal static string GetHashAlgorithm(int len)
         {
             switch (len)
@@ -271,10 +333,11 @@ namespace wan24.TSAClient
         }
 
         /// <summary>
-        /// Validate a TSR using the source hash
+        /// Validate a TSR using the source SHA hash
         /// </summary>
         /// <param name="tsrFile">TSR filename</param>
-        /// <param name="hash">Source hash</param>
+        /// <param name="hash">Source SHA hash</param>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static void ValidateSourceTsr(string tsrFile, byte[] hash)
         {
             if (tsrFile == null) throw new ArgumentNullException(nameof(tsrFile));
@@ -283,10 +346,11 @@ namespace wan24.TSAClient
         }
 
         /// <summary>
-        /// Validate a TSR using the source hash
+        /// Validate a TSR using the source SHA hash
         /// </summary>
         /// <param name="tsrData">TSR</param>
-        /// <param name="hash">Source hash</param>
+        /// <param name="hash">Source SHA hash</param>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static void ValidateSourceTsr(byte[] tsrData, byte[] hash)
         {
             if (tsrData == null) throw new ArgumentNullException(nameof(tsrData));
@@ -299,6 +363,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tokenFile">Timestamp token filename</param>
         /// <param name="fileName">Source filename</param>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static void ValidateSourceToken(string tokenFile, string fileName)
         {
             if (tokenFile == null) throw new ArgumentNullException(nameof(tokenFile));
@@ -308,10 +373,11 @@ namespace wan24.TSAClient
         }
 
         /// <summary>
-        /// Validate a timestamp token using the source hash
+        /// Validate a timestamp token using the source SHA hash
         /// </summary>
         /// <param name="tokenFile">Timestamp token filename</param>
-        /// <param name="hash">Source hash</param>
+        /// <param name="hash">Source SHA hash</param>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static void ValidateSourceToken(string tokenFile, byte[] hash)
         {
             if (tokenFile == null) throw new ArgumentNullException(nameof(tokenFile));
@@ -320,10 +386,11 @@ namespace wan24.TSAClient
         }
 
         /// <summary>
-        /// Validate a timestamp token using the source hash
+        /// Validate a timestamp token using the source SHA hash
         /// </summary>
         /// <param name="tokenData">Timestamp token</param>
-        /// <param name="hash">Source hash</param>
+        /// <param name="hash">Source SHA hash</param>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static void ValidateSourceToken(byte[] tokenData, byte[] hash)
         {
             if (tokenData == null) throw new ArgumentNullException(nameof(tokenData));
@@ -332,10 +399,12 @@ namespace wan24.TSAClient
         }
 
         /// <summary>
-        /// Validate a timestamp token using the source hash
+        /// Validate a timestamp token using the source SHA hash
         /// </summary>
         /// <param name="token">Timestamp token</param>
-        /// <param name="hash">Source hash</param>
+        /// <param name="hash">Source SHA hash</param>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
+        /// <exception cref="InvalidDataException">Source SHA hash doesn't match the TSR digest</exception>
         internal static void ValidateSourceToken(TimeStampToken token, byte[] hash)
         {
             if (token == null) throw new ArgumentNullException(nameof(token));
@@ -349,7 +418,8 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tsrFile">TSR filename</param>
         /// <param name="outFile">Target filename</param>
-        /// <returns>Token</returns>
+        /// <returns>Timestamp token</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static byte[] ExtractToken(string tsrFile, string outFile = null)
         {
             if (tsrFile == null) throw new ArgumentNullException(nameof(tsrFile));
@@ -361,7 +431,8 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tsrData">TSR</param>
         /// <param name="outFile">Target filename</param>
-        /// <returns>Token</returns>
+        /// <returns>Timestamp token</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static byte[] ExtractToken(byte[] tsrData, string outFile = null)
         {
             if (tsrData == null) throw new ArgumentNullException(nameof(tsrData));
@@ -380,6 +451,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tokenFile">Timestamp token filename</param>
         /// <param name="certFile">X509 certificate filename</param>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static void ValidateToken(string tokenFile, string certFile)
         {
             if (tokenFile == null) throw new ArgumentNullException(nameof(tokenFile));
@@ -392,6 +464,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tokenData">Timestamp token</param>
         /// <param name="certFile">X509 certificate filename</param>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static void ValidateToken(byte[] tokenData, string certFile)
         {
             if (tokenData == null) throw new ArgumentNullException(nameof(tokenData));
@@ -404,6 +477,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tsqFile">TSQ filename</param>
         /// <returns>Information</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static IEnumerable<string> RequestInfo(string tsqFile)
         {
             if (tsqFile == null) throw new ArgumentNullException(nameof(tsqFile));
@@ -415,6 +489,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tsqData">TSQ</param>
         /// <returns>Information</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static IEnumerable<string> RequestInfo(byte[] tsqData)
         {
             if (tsqData == null) throw new ArgumentNullException(nameof(tsqData));
@@ -436,6 +511,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tsrFile">TSR filename</param>
         /// <returns>Information</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static IEnumerable<string> ResponseInfo(string tsrFile)
         {
             if (tsrFile == null) throw new ArgumentNullException(nameof(tsrFile));
@@ -447,6 +523,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tsrData">TSR</param>
         /// <returns>Information</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static IEnumerable<string> ResponseInfo(byte[] tsrData)
         {
             if (tsrData == null) throw new ArgumentNullException(nameof(tsrData));
@@ -460,6 +537,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tokenFile">Timestamp token filename</param>
         /// <returns>Information</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static IEnumerable<string> TokenInfo(string tokenFile)
         {
             if (tokenFile == null) throw new ArgumentNullException(nameof(tokenFile));
@@ -471,6 +549,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tokenData">Timestamp token</param>
         /// <returns>Information</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static IEnumerable<string> TokenInfo(byte[] tokenData)
         {
             if (tokenData == null) throw new ArgumentNullException(nameof(tokenData));
@@ -482,6 +561,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="token">Timestamp token</param>
         /// <returns>Information</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         internal static IEnumerable<string> TokenInfo(TimeStampToken token)
         {
             if (token == null) throw new ArgumentNullException(nameof(token));
@@ -506,6 +586,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tsqFile">TSQ filename</param>
         /// <returns>TSQ</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static TimeStampRequest GetRequest(string tsqFile)
         {
             if (tsqFile == null) throw new ArgumentNullException(nameof(tsqFile));
@@ -517,6 +598,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tsrFile">TSR filename</param>
         /// <returns>TSR</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static TimeStampResponse GetResponse(string tsrFile)
         {
             if (tsrFile == null) throw new ArgumentNullException(nameof(tsrFile));
@@ -528,6 +610,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tokenFile">Timestamp token filename</param>
         /// <returns>Timestamp token</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static TimeStampToken GetToken(string tokenFile)
         {
             if (tokenFile == null) throw new ArgumentNullException(nameof(tokenFile));
@@ -539,6 +622,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tsqData">TSQ</param>
         /// <returns>TSQ</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static TimeStampRequest GetRequest(byte[] tsqData)
         {
             if (tsqData == null) throw new ArgumentNullException(nameof(tsqData));
@@ -550,6 +634,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tsrData">TSR</param>
         /// <returns>TSR</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static TimeStampResponse GetResponse(byte[] tsrData)
         {
             if (tsrData == null) throw new ArgumentNullException(nameof(tsrData));
@@ -561,6 +646,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tokenData">Timestamp token</param>
         /// <returns>Timestamp token</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static TimeStampToken GetToken(byte[] tokenData)
         {
             if (tokenData == null) throw new ArgumentNullException(nameof(tokenData));
@@ -572,6 +658,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tsqData">TSQ</param>
         /// <returns>TSQ</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static TimeStampRequest GetRequest(Stream tsqData)
         {
             if (tsqData == null) throw new ArgumentNullException(nameof(tsqData));
@@ -583,6 +670,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tsrData">TSR</param>
         /// <returns>TSR</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static TimeStampResponse GetResponse(Stream tsrData)
         {
             if (tsrData == null) throw new ArgumentNullException(nameof(tsrData));
@@ -594,6 +682,7 @@ namespace wan24.TSAClient
         /// </summary>
         /// <param name="tokenData">Timestamp token</param>
         /// <returns>Timestamp token</returns>
+        /// <exception cref="ArgumentNullException">Required parameter is <see langword="null"/></exception>
         public static TimeStampToken GetToken(Stream tokenData)
         {
             if (tokenData == null) throw new ArgumentNullException(nameof(tokenData));

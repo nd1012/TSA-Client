@@ -5,7 +5,23 @@
     <RootNamespace>wan24.TSAClient</RootNamespace>
     <AssemblyName>tsacl</AssemblyName>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PackageId>TSA-Client-Library</PackageId>
+    <Company>Andreas Zimmermann, wan24.de</Company>
+    <Product>TSA-Client</Product>
+    <Description>.NET TSA client library that uses BouncyCastle-PCL.</Description>
+    <Copyright>©2021 Andreas Zimmermann, wan24.de</Copyright>
+    <PackageProjectUrl>https://github.com/nd1012/TSA-Client</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/nd1012/TSA-Client</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>tsa,tsr,tsq,rfc3161</PackageTags>
+    <NeutralLanguage>en-001</NeutralLanguage>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
+
+<ItemGroup>
+	<None Include="LICENSE" Pack="true" PackagePath="" />
+</ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
@@ -24,6 +40,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="LICENSE">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

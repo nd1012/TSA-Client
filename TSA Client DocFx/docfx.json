@@ -1,0 +1,72 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "files": [
+            "TSA Client Library/**.csproj"
+          ],
+          "src": ".."
+        }
+      ],
+      "dest": "api",
+      "disableGitFeatures": false,
+      "disableDefaultFilter": false
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "api/**.yml",
+          "api/index.md"
+        ]
+      },
+      {
+        "files": [
+          "articles/**.md",
+          "articles/**/toc.yml",
+          "toc.yml",
+          "*.md"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ]
+      }
+    ],
+    "overwrite": [
+      {
+        "files": [
+          "apidoc/**.md"
+        ],
+        "exclude": [
+          "obj/**",
+          "_site/**"
+        ]
+      }
+    ],
+    "dest": "_site",
+    "globalMetadataFiles": [],
+    "globalMetadata": {
+      "_appTitle": "TSA-Client",
+      "_appFooter": "(c) 2021 Andreas Zimmermann, wan24.de",
+      //"_appLogoPath": "custom/logo.png",
+      //"_appFaviconPath": "custom/favicon.ico",
+      "_enableNewTab": true
+    },
+    "fileMetadataFiles": [],
+    "template": [
+      "default"
+    ],
+    "postProcessors": [],
+    "markdownEngineName": "markdig",
+    "noLangKeyword": false,
+    "keepFileLink": false,
+    "cleanupCacheHistory": false,
+    "disableGitFeatures": false
+  }
+}

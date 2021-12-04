@@ -1,0 +1,433 @@
+### YamlMime:XRefMap
+sorted: true
+references:
+- uid: wan24.TSAClient
+  name: wan24.TSAClient
+  href: api/wan24.TSAClient.html
+  commentId: N:wan24.TSAClient
+  fullName: wan24.TSAClient
+  nameWithType: wan24.TSAClient
+- uid: wan24.TSAClient.TSA
+  name: TSA
+  href: api/wan24.TSAClient.TSA.html
+  commentId: T:wan24.TSAClient.TSA
+  fullName: wan24.TSAClient.TSA
+  nameWithType: TSA
+- uid: wan24.TSAClient.TSA.BC_VERSION
+  name: BC_VERSION
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_BC_VERSION
+  commentId: P:wan24.TSAClient.TSA.BC_VERSION
+  fullName: wan24.TSAClient.TSA.BC_VERSION
+  nameWithType: TSA.BC_VERSION
+- uid: wan24.TSAClient.TSA.BC_VERSION*
+  name: BC_VERSION
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_BC_VERSION_
+  commentId: Overload:wan24.TSAClient.TSA.BC_VERSION
+  isSpec: "True"
+  fullName: wan24.TSAClient.TSA.BC_VERSION
+  nameWithType: TSA.BC_VERSION
+- uid: wan24.TSAClient.TSA.CreateHash(System.Byte[],System.String)
+  name: CreateHash(Byte[], String)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_CreateHash_System_Byte___System_String_
+  commentId: M:wan24.TSAClient.TSA.CreateHash(System.Byte[],System.String)
+  name.vb: CreateHash(Byte(), String)
+  fullName: wan24.TSAClient.TSA.CreateHash(System.Byte[], System.String)
+  fullName.vb: wan24.TSAClient.TSA.CreateHash(System.Byte(), System.String)
+  nameWithType: TSA.CreateHash(Byte[], String)
+  nameWithType.vb: TSA.CreateHash(Byte(), String)
+- uid: wan24.TSAClient.TSA.CreateHash(System.String,System.String)
+  name: CreateHash(String, String)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_CreateHash_System_String_System_String_
+  commentId: M:wan24.TSAClient.TSA.CreateHash(System.String,System.String)
+  fullName: wan24.TSAClient.TSA.CreateHash(System.String, System.String)
+  nameWithType: TSA.CreateHash(String, String)
+- uid: wan24.TSAClient.TSA.CreateHash*
+  name: CreateHash
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_CreateHash_
+  commentId: Overload:wan24.TSAClient.TSA.CreateHash
+  isSpec: "True"
+  fullName: wan24.TSAClient.TSA.CreateHash
+  nameWithType: TSA.CreateHash
+- uid: wan24.TSAClient.TSA.CreateRequest(System.Byte[],System.String,System.Boolean)
+  name: CreateRequest(Byte[], String, Boolean)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_CreateRequest_System_Byte___System_String_System_Boolean_
+  commentId: M:wan24.TSAClient.TSA.CreateRequest(System.Byte[],System.String,System.Boolean)
+  name.vb: CreateRequest(Byte(), String, Boolean)
+  fullName: wan24.TSAClient.TSA.CreateRequest(System.Byte[], System.String, System.Boolean)
+  fullName.vb: wan24.TSAClient.TSA.CreateRequest(System.Byte(), System.String, System.Boolean)
+  nameWithType: TSA.CreateRequest(Byte[], String, Boolean)
+  nameWithType.vb: TSA.CreateRequest(Byte(), String, Boolean)
+- uid: wan24.TSAClient.TSA.CreateRequest*
+  name: CreateRequest
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_CreateRequest_
+  commentId: Overload:wan24.TSAClient.TSA.CreateRequest
+  isSpec: "True"
+  fullName: wan24.TSAClient.TSA.CreateRequest
+  nameWithType: TSA.CreateRequest
+- uid: wan24.TSAClient.TSA.DEFAULT_HASH
+  name: DEFAULT_HASH
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_DEFAULT_HASH
+  commentId: F:wan24.TSAClient.TSA.DEFAULT_HASH
+  fullName: wan24.TSAClient.TSA.DEFAULT_HASH
+  nameWithType: TSA.DEFAULT_HASH
+- uid: wan24.TSAClient.TSA.ExtractToken(System.Byte[],System.String)
+  name: ExtractToken(Byte[], String)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ExtractToken_System_Byte___System_String_
+  commentId: M:wan24.TSAClient.TSA.ExtractToken(System.Byte[],System.String)
+  name.vb: ExtractToken(Byte(), String)
+  fullName: wan24.TSAClient.TSA.ExtractToken(System.Byte[], System.String)
+  fullName.vb: wan24.TSAClient.TSA.ExtractToken(System.Byte(), System.String)
+  nameWithType: TSA.ExtractToken(Byte[], String)
+  nameWithType.vb: TSA.ExtractToken(Byte(), String)
+- uid: wan24.TSAClient.TSA.ExtractToken(System.String,System.String)
+  name: ExtractToken(String, String)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ExtractToken_System_String_System_String_
+  commentId: M:wan24.TSAClient.TSA.ExtractToken(System.String,System.String)
+  fullName: wan24.TSAClient.TSA.ExtractToken(System.String, System.String)
+  nameWithType: TSA.ExtractToken(String, String)
+- uid: wan24.TSAClient.TSA.ExtractToken*
+  name: ExtractToken
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ExtractToken_
+  commentId: Overload:wan24.TSAClient.TSA.ExtractToken
+  isSpec: "True"
+  fullName: wan24.TSAClient.TSA.ExtractToken
+  nameWithType: TSA.ExtractToken
+- uid: wan24.TSAClient.TSA.GetRequest(System.Byte[])
+  name: GetRequest(Byte[])
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_GetRequest_System_Byte___
+  commentId: M:wan24.TSAClient.TSA.GetRequest(System.Byte[])
+  name.vb: GetRequest(Byte())
+  fullName: wan24.TSAClient.TSA.GetRequest(System.Byte[])
+  fullName.vb: wan24.TSAClient.TSA.GetRequest(System.Byte())
+  nameWithType: TSA.GetRequest(Byte[])
+  nameWithType.vb: TSA.GetRequest(Byte())
+- uid: wan24.TSAClient.TSA.GetRequest(System.IO.Stream)
+  name: GetRequest(Stream)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_GetRequest_System_IO_Stream_
+  commentId: M:wan24.TSAClient.TSA.GetRequest(System.IO.Stream)
+  fullName: wan24.TSAClient.TSA.GetRequest(System.IO.Stream)
+  nameWithType: TSA.GetRequest(Stream)
+- uid: wan24.TSAClient.TSA.GetRequest(System.String)
+  name: GetRequest(String)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_GetRequest_System_String_
+  commentId: M:wan24.TSAClient.TSA.GetRequest(System.String)
+  fullName: wan24.TSAClient.TSA.GetRequest(System.String)
+  nameWithType: TSA.GetRequest(String)
+- uid: wan24.TSAClient.TSA.GetRequest*
+  name: GetRequest
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_GetRequest_
+  commentId: Overload:wan24.TSAClient.TSA.GetRequest
+  isSpec: "True"
+  fullName: wan24.TSAClient.TSA.GetRequest
+  nameWithType: TSA.GetRequest
+- uid: wan24.TSAClient.TSA.GetResponse(System.Byte[])
+  name: GetResponse(Byte[])
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_GetResponse_System_Byte___
+  commentId: M:wan24.TSAClient.TSA.GetResponse(System.Byte[])
+  name.vb: GetResponse(Byte())
+  fullName: wan24.TSAClient.TSA.GetResponse(System.Byte[])
+  fullName.vb: wan24.TSAClient.TSA.GetResponse(System.Byte())
+  nameWithType: TSA.GetResponse(Byte[])
+  nameWithType.vb: TSA.GetResponse(Byte())
+- uid: wan24.TSAClient.TSA.GetResponse(System.IO.Stream)
+  name: GetResponse(Stream)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_GetResponse_System_IO_Stream_
+  commentId: M:wan24.TSAClient.TSA.GetResponse(System.IO.Stream)
+  fullName: wan24.TSAClient.TSA.GetResponse(System.IO.Stream)
+  nameWithType: TSA.GetResponse(Stream)
+- uid: wan24.TSAClient.TSA.GetResponse(System.String)
+  name: GetResponse(String)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_GetResponse_System_String_
+  commentId: M:wan24.TSAClient.TSA.GetResponse(System.String)
+  fullName: wan24.TSAClient.TSA.GetResponse(System.String)
+  nameWithType: TSA.GetResponse(String)
+- uid: wan24.TSAClient.TSA.GetResponse*
+  name: GetResponse
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_GetResponse_
+  commentId: Overload:wan24.TSAClient.TSA.GetResponse
+  isSpec: "True"
+  fullName: wan24.TSAClient.TSA.GetResponse
+  nameWithType: TSA.GetResponse
+- uid: wan24.TSAClient.TSA.GetToken(System.Byte[])
+  name: GetToken(Byte[])
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_GetToken_System_Byte___
+  commentId: M:wan24.TSAClient.TSA.GetToken(System.Byte[])
+  name.vb: GetToken(Byte())
+  fullName: wan24.TSAClient.TSA.GetToken(System.Byte[])
+  fullName.vb: wan24.TSAClient.TSA.GetToken(System.Byte())
+  nameWithType: TSA.GetToken(Byte[])
+  nameWithType.vb: TSA.GetToken(Byte())
+- uid: wan24.TSAClient.TSA.GetToken(System.IO.Stream)
+  name: GetToken(Stream)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_GetToken_System_IO_Stream_
+  commentId: M:wan24.TSAClient.TSA.GetToken(System.IO.Stream)
+  fullName: wan24.TSAClient.TSA.GetToken(System.IO.Stream)
+  nameWithType: TSA.GetToken(Stream)
+- uid: wan24.TSAClient.TSA.GetToken(System.String)
+  name: GetToken(String)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_GetToken_System_String_
+  commentId: M:wan24.TSAClient.TSA.GetToken(System.String)
+  fullName: wan24.TSAClient.TSA.GetToken(System.String)
+  nameWithType: TSA.GetToken(String)
+- uid: wan24.TSAClient.TSA.GetToken*
+  name: GetToken
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_GetToken_
+  commentId: Overload:wan24.TSAClient.TSA.GetToken
+  isSpec: "True"
+  fullName: wan24.TSAClient.TSA.GetToken
+  nameWithType: TSA.GetToken
+- uid: wan24.TSAClient.TSA.HASH_SHA1
+  name: HASH_SHA1
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_HASH_SHA1
+  commentId: F:wan24.TSAClient.TSA.HASH_SHA1
+  fullName: wan24.TSAClient.TSA.HASH_SHA1
+  nameWithType: TSA.HASH_SHA1
+- uid: wan24.TSAClient.TSA.HASH_SHA1_LEN
+  name: HASH_SHA1_LEN
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_HASH_SHA1_LEN
+  commentId: F:wan24.TSAClient.TSA.HASH_SHA1_LEN
+  fullName: wan24.TSAClient.TSA.HASH_SHA1_LEN
+  nameWithType: TSA.HASH_SHA1_LEN
+- uid: wan24.TSAClient.TSA.HASH_SHA256
+  name: HASH_SHA256
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_HASH_SHA256
+  commentId: F:wan24.TSAClient.TSA.HASH_SHA256
+  fullName: wan24.TSAClient.TSA.HASH_SHA256
+  nameWithType: TSA.HASH_SHA256
+- uid: wan24.TSAClient.TSA.HASH_SHA256_LEN
+  name: HASH_SHA256_LEN
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_HASH_SHA256_LEN
+  commentId: F:wan24.TSAClient.TSA.HASH_SHA256_LEN
+  fullName: wan24.TSAClient.TSA.HASH_SHA256_LEN
+  nameWithType: TSA.HASH_SHA256_LEN
+- uid: wan24.TSAClient.TSA.HASH_SHA384
+  name: HASH_SHA384
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_HASH_SHA384
+  commentId: F:wan24.TSAClient.TSA.HASH_SHA384
+  fullName: wan24.TSAClient.TSA.HASH_SHA384
+  nameWithType: TSA.HASH_SHA384
+- uid: wan24.TSAClient.TSA.HASH_SHA384_LEN
+  name: HASH_SHA384_LEN
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_HASH_SHA384_LEN
+  commentId: F:wan24.TSAClient.TSA.HASH_SHA384_LEN
+  fullName: wan24.TSAClient.TSA.HASH_SHA384_LEN
+  nameWithType: TSA.HASH_SHA384_LEN
+- uid: wan24.TSAClient.TSA.HASH_SHA512
+  name: HASH_SHA512
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_HASH_SHA512
+  commentId: F:wan24.TSAClient.TSA.HASH_SHA512
+  fullName: wan24.TSAClient.TSA.HASH_SHA512
+  nameWithType: TSA.HASH_SHA512
+- uid: wan24.TSAClient.TSA.HASH_SHA512_LEN
+  name: HASH_SHA512_LEN
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_HASH_SHA512_LEN
+  commentId: F:wan24.TSAClient.TSA.HASH_SHA512_LEN
+  fullName: wan24.TSAClient.TSA.HASH_SHA512_LEN
+  nameWithType: TSA.HASH_SHA512_LEN
+- uid: wan24.TSAClient.TSA.RequestInfo(System.Byte[])
+  name: RequestInfo(Byte[])
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_RequestInfo_System_Byte___
+  commentId: M:wan24.TSAClient.TSA.RequestInfo(System.Byte[])
+  name.vb: RequestInfo(Byte())
+  fullName: wan24.TSAClient.TSA.RequestInfo(System.Byte[])
+  fullName.vb: wan24.TSAClient.TSA.RequestInfo(System.Byte())
+  nameWithType: TSA.RequestInfo(Byte[])
+  nameWithType.vb: TSA.RequestInfo(Byte())
+- uid: wan24.TSAClient.TSA.RequestInfo(System.String)
+  name: RequestInfo(String)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_RequestInfo_System_String_
+  commentId: M:wan24.TSAClient.TSA.RequestInfo(System.String)
+  fullName: wan24.TSAClient.TSA.RequestInfo(System.String)
+  nameWithType: TSA.RequestInfo(String)
+- uid: wan24.TSAClient.TSA.RequestInfo*
+  name: RequestInfo
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_RequestInfo_
+  commentId: Overload:wan24.TSAClient.TSA.RequestInfo
+  isSpec: "True"
+  fullName: wan24.TSAClient.TSA.RequestInfo
+  nameWithType: TSA.RequestInfo
+- uid: wan24.TSAClient.TSA.ResponseInfo(System.Byte[])
+  name: ResponseInfo(Byte[])
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ResponseInfo_System_Byte___
+  commentId: M:wan24.TSAClient.TSA.ResponseInfo(System.Byte[])
+  name.vb: ResponseInfo(Byte())
+  fullName: wan24.TSAClient.TSA.ResponseInfo(System.Byte[])
+  fullName.vb: wan24.TSAClient.TSA.ResponseInfo(System.Byte())
+  nameWithType: TSA.ResponseInfo(Byte[])
+  nameWithType.vb: TSA.ResponseInfo(Byte())
+- uid: wan24.TSAClient.TSA.ResponseInfo(System.String)
+  name: ResponseInfo(String)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ResponseInfo_System_String_
+  commentId: M:wan24.TSAClient.TSA.ResponseInfo(System.String)
+  fullName: wan24.TSAClient.TSA.ResponseInfo(System.String)
+  nameWithType: TSA.ResponseInfo(String)
+- uid: wan24.TSAClient.TSA.ResponseInfo*
+  name: ResponseInfo
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ResponseInfo_
+  commentId: Overload:wan24.TSAClient.TSA.ResponseInfo
+  isSpec: "True"
+  fullName: wan24.TSAClient.TSA.ResponseInfo
+  nameWithType: TSA.ResponseInfo
+- uid: wan24.TSAClient.TSA.SendRequest(System.Byte[],System.String,System.String,System.Net.HttpWebRequest)
+  name: SendRequest(Byte[], String, String, HttpWebRequest)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_SendRequest_System_Byte___System_String_System_String_System_Net_HttpWebRequest_
+  commentId: M:wan24.TSAClient.TSA.SendRequest(System.Byte[],System.String,System.String,System.Net.HttpWebRequest)
+  name.vb: SendRequest(Byte(), String, String, HttpWebRequest)
+  fullName: wan24.TSAClient.TSA.SendRequest(System.Byte[], System.String, System.String, System.Net.HttpWebRequest)
+  fullName.vb: wan24.TSAClient.TSA.SendRequest(System.Byte(), System.String, System.String, System.Net.HttpWebRequest)
+  nameWithType: TSA.SendRequest(Byte[], String, String, HttpWebRequest)
+  nameWithType.vb: TSA.SendRequest(Byte(), String, String, HttpWebRequest)
+- uid: wan24.TSAClient.TSA.SendRequest(System.String,System.String,System.String)
+  name: SendRequest(String, String, String)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_SendRequest_System_String_System_String_System_String_
+  commentId: M:wan24.TSAClient.TSA.SendRequest(System.String,System.String,System.String)
+  fullName: wan24.TSAClient.TSA.SendRequest(System.String, System.String, System.String)
+  nameWithType: TSA.SendRequest(String, String, String)
+- uid: wan24.TSAClient.TSA.SendRequest*
+  name: SendRequest
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_SendRequest_
+  commentId: Overload:wan24.TSAClient.TSA.SendRequest
+  isSpec: "True"
+  fullName: wan24.TSAClient.TSA.SendRequest
+  nameWithType: TSA.SendRequest
+- uid: wan24.TSAClient.TSA.TokenInfo(System.Byte[])
+  name: TokenInfo(Byte[])
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_TokenInfo_System_Byte___
+  commentId: M:wan24.TSAClient.TSA.TokenInfo(System.Byte[])
+  name.vb: TokenInfo(Byte())
+  fullName: wan24.TSAClient.TSA.TokenInfo(System.Byte[])
+  fullName.vb: wan24.TSAClient.TSA.TokenInfo(System.Byte())
+  nameWithType: TSA.TokenInfo(Byte[])
+  nameWithType.vb: TSA.TokenInfo(Byte())
+- uid: wan24.TSAClient.TSA.TokenInfo(System.String)
+  name: TokenInfo(String)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_TokenInfo_System_String_
+  commentId: M:wan24.TSAClient.TSA.TokenInfo(System.String)
+  fullName: wan24.TSAClient.TSA.TokenInfo(System.String)
+  nameWithType: TSA.TokenInfo(String)
+- uid: wan24.TSAClient.TSA.TokenInfo*
+  name: TokenInfo
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_TokenInfo_
+  commentId: Overload:wan24.TSAClient.TSA.TokenInfo
+  isSpec: "True"
+  fullName: wan24.TSAClient.TSA.TokenInfo
+  nameWithType: TSA.TokenInfo
+- uid: wan24.TSAClient.TSA.ValidateResponse(System.Byte[],System.Byte[])
+  name: ValidateResponse(Byte[], Byte[])
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ValidateResponse_System_Byte___System_Byte___
+  commentId: M:wan24.TSAClient.TSA.ValidateResponse(System.Byte[],System.Byte[])
+  name.vb: ValidateResponse(Byte(), Byte())
+  fullName: wan24.TSAClient.TSA.ValidateResponse(System.Byte[], System.Byte[])
+  fullName.vb: wan24.TSAClient.TSA.ValidateResponse(System.Byte(), System.Byte())
+  nameWithType: TSA.ValidateResponse(Byte[], Byte[])
+  nameWithType.vb: TSA.ValidateResponse(Byte(), Byte())
+- uid: wan24.TSAClient.TSA.ValidateResponse(System.String,System.String)
+  name: ValidateResponse(String, String)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ValidateResponse_System_String_System_String_
+  commentId: M:wan24.TSAClient.TSA.ValidateResponse(System.String,System.String)
+  fullName: wan24.TSAClient.TSA.ValidateResponse(System.String, System.String)
+  nameWithType: TSA.ValidateResponse(String, String)
+- uid: wan24.TSAClient.TSA.ValidateResponse*
+  name: ValidateResponse
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ValidateResponse_
+  commentId: Overload:wan24.TSAClient.TSA.ValidateResponse
+  isSpec: "True"
+  fullName: wan24.TSAClient.TSA.ValidateResponse
+  nameWithType: TSA.ValidateResponse
+- uid: wan24.TSAClient.TSA.ValidateSourceToken(System.Byte[],System.Byte[])
+  name: ValidateSourceToken(Byte[], Byte[])
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ValidateSourceToken_System_Byte___System_Byte___
+  commentId: M:wan24.TSAClient.TSA.ValidateSourceToken(System.Byte[],System.Byte[])
+  name.vb: ValidateSourceToken(Byte(), Byte())
+  fullName: wan24.TSAClient.TSA.ValidateSourceToken(System.Byte[], System.Byte[])
+  fullName.vb: wan24.TSAClient.TSA.ValidateSourceToken(System.Byte(), System.Byte())
+  nameWithType: TSA.ValidateSourceToken(Byte[], Byte[])
+  nameWithType.vb: TSA.ValidateSourceToken(Byte(), Byte())
+- uid: wan24.TSAClient.TSA.ValidateSourceToken(System.String,System.Byte[])
+  name: ValidateSourceToken(String, Byte[])
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ValidateSourceToken_System_String_System_Byte___
+  commentId: M:wan24.TSAClient.TSA.ValidateSourceToken(System.String,System.Byte[])
+  name.vb: ValidateSourceToken(String, Byte())
+  fullName: wan24.TSAClient.TSA.ValidateSourceToken(System.String, System.Byte[])
+  fullName.vb: wan24.TSAClient.TSA.ValidateSourceToken(System.String, System.Byte())
+  nameWithType: TSA.ValidateSourceToken(String, Byte[])
+  nameWithType.vb: TSA.ValidateSourceToken(String, Byte())
+- uid: wan24.TSAClient.TSA.ValidateSourceToken(System.String,System.String)
+  name: ValidateSourceToken(String, String)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ValidateSourceToken_System_String_System_String_
+  commentId: M:wan24.TSAClient.TSA.ValidateSourceToken(System.String,System.String)
+  fullName: wan24.TSAClient.TSA.ValidateSourceToken(System.String, System.String)
+  nameWithType: TSA.ValidateSourceToken(String, String)
+- uid: wan24.TSAClient.TSA.ValidateSourceToken*
+  name: ValidateSourceToken
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ValidateSourceToken_
+  commentId: Overload:wan24.TSAClient.TSA.ValidateSourceToken
+  isSpec: "True"
+  fullName: wan24.TSAClient.TSA.ValidateSourceToken
+  nameWithType: TSA.ValidateSourceToken
+- uid: wan24.TSAClient.TSA.ValidateSourceTsr(System.Byte[],System.Byte[])
+  name: ValidateSourceTsr(Byte[], Byte[])
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ValidateSourceTsr_System_Byte___System_Byte___
+  commentId: M:wan24.TSAClient.TSA.ValidateSourceTsr(System.Byte[],System.Byte[])
+  name.vb: ValidateSourceTsr(Byte(), Byte())
+  fullName: wan24.TSAClient.TSA.ValidateSourceTsr(System.Byte[], System.Byte[])
+  fullName.vb: wan24.TSAClient.TSA.ValidateSourceTsr(System.Byte(), System.Byte())
+  nameWithType: TSA.ValidateSourceTsr(Byte[], Byte[])
+  nameWithType.vb: TSA.ValidateSourceTsr(Byte(), Byte())
+- uid: wan24.TSAClient.TSA.ValidateSourceTsr(System.String,System.Byte[])
+  name: ValidateSourceTsr(String, Byte[])
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ValidateSourceTsr_System_String_System_Byte___
+  commentId: M:wan24.TSAClient.TSA.ValidateSourceTsr(System.String,System.Byte[])
+  name.vb: ValidateSourceTsr(String, Byte())
+  fullName: wan24.TSAClient.TSA.ValidateSourceTsr(System.String, System.Byte[])
+  fullName.vb: wan24.TSAClient.TSA.ValidateSourceTsr(System.String, System.Byte())
+  nameWithType: TSA.ValidateSourceTsr(String, Byte[])
+  nameWithType.vb: TSA.ValidateSourceTsr(String, Byte())
+- uid: wan24.TSAClient.TSA.ValidateSourceTsr(System.String,System.String)
+  name: ValidateSourceTsr(String, String)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ValidateSourceTsr_System_String_System_String_
+  commentId: M:wan24.TSAClient.TSA.ValidateSourceTsr(System.String,System.String)
+  fullName: wan24.TSAClient.TSA.ValidateSourceTsr(System.String, System.String)
+  nameWithType: TSA.ValidateSourceTsr(String, String)
+- uid: wan24.TSAClient.TSA.ValidateSourceTsr*
+  name: ValidateSourceTsr
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ValidateSourceTsr_
+  commentId: Overload:wan24.TSAClient.TSA.ValidateSourceTsr
+  isSpec: "True"
+  fullName: wan24.TSAClient.TSA.ValidateSourceTsr
+  nameWithType: TSA.ValidateSourceTsr
+- uid: wan24.TSAClient.TSA.ValidateToken(System.Byte[],System.String)
+  name: ValidateToken(Byte[], String)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ValidateToken_System_Byte___System_String_
+  commentId: M:wan24.TSAClient.TSA.ValidateToken(System.Byte[],System.String)
+  name.vb: ValidateToken(Byte(), String)
+  fullName: wan24.TSAClient.TSA.ValidateToken(System.Byte[], System.String)
+  fullName.vb: wan24.TSAClient.TSA.ValidateToken(System.Byte(), System.String)
+  nameWithType: TSA.ValidateToken(Byte[], String)
+  nameWithType.vb: TSA.ValidateToken(Byte(), String)
+- uid: wan24.TSAClient.TSA.ValidateToken(System.String,System.String)
+  name: ValidateToken(String, String)
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ValidateToken_System_String_System_String_
+  commentId: M:wan24.TSAClient.TSA.ValidateToken(System.String,System.String)
+  fullName: wan24.TSAClient.TSA.ValidateToken(System.String, System.String)
+  nameWithType: TSA.ValidateToken(String, String)
+- uid: wan24.TSAClient.TSA.ValidateToken*
+  name: ValidateToken
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_ValidateToken_
+  commentId: Overload:wan24.TSAClient.TSA.ValidateToken
+  isSpec: "True"
+  fullName: wan24.TSAClient.TSA.ValidateToken
+  nameWithType: TSA.ValidateToken
+- uid: wan24.TSAClient.TSA.VERSION
+  name: VERSION
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_VERSION
+  commentId: P:wan24.TSAClient.TSA.VERSION
+  fullName: wan24.TSAClient.TSA.VERSION
+  nameWithType: TSA.VERSION
+- uid: wan24.TSAClient.TSA.VERSION*
+  name: VERSION
+  href: api/wan24.TSAClient.TSA.html#wan24_TSAClient_TSA_VERSION_
+  commentId: Overload:wan24.TSAClient.TSA.VERSION
+  isSpec: "True"
+  fullName: wan24.TSAClient.TSA.VERSION
+  nameWithType: TSA.VERSION
