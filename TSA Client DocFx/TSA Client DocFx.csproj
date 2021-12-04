@@ -14,4 +14,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="copy /Y &quot;..\README.md&quot; &quot;.\index.md&quot;" />
+  </Target>
+
 </Project>

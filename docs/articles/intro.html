@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Add your introductions here! | TSA-Client </title>
+    <title>TSA Client | TSA-Client </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Add your introductions here! | TSA-Client ">
+    <meta name="title" content="TSA Client | TSA-Client ">
     <meta name="generator" content="docfx 2.58.9.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
@@ -67,8 +67,117 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-<h1 id="add-your-introductions-here">Add your introductions here!</h1>
+<h1 id="tsa-client">TSA Client</h1>
 
+<p>The TSA Client contains two components:</p>
+<ol>
+<li>.NET 6 executeable CLI tool</li>
+<li>.NET Standard 2.0 library</li>
+</ol>
+<p>Using <a href="https://github.com/clairernovotny/BouncyCastle-PCL">BouncyCastle-PCL</a> it can create a TSQ and validate the TSR (RFC 3161) that comes from a third party SaaS TSA (like <a href="https://freetsa.org">freeTSA.org</a>).</p>
+<h2 id="basic-usage">Basic usage</h2>
+<h3 id="cli-tool">CLI tool</h3>
+<h4 id="create-timestamp">Create timestamp</h4>
+<pre><code>tsac --file source.file --tsa https://freetsa.org/tsr --tsq source.tsq --tsr source.tsr --token source.tst
+</code></pre>
+<p>This will create a timestamp response (SHA512) for the file <code>source.file</code> and write some files:</p>
+<ul>
+<li><code>source.tsq</code>: The timestamp request</li>
+<li><code>source.tsr</code>: The timestamp response</li>
+<li><code>source.tst</code>: The timestamp token</li>
+</ul>
+<p>The response is validated already at this point.</p>
+<p>The parameters <code>tsq</code>, <code>tsr</code> and <code>token</code> are optional - anyway, you may want to use <code>tsr</code> at last.</p>
+<h4 id="validate-timestamp--source-data">Validate timestamp / source data</h4>
+<p>Validate a TSR against the TSQ:</p>
+<pre><code>tsac --tsq source.tsq --tsr source.tsr
+</code></pre>
+<p>Validate a TSR against the source data:</p>
+<pre><code>tsac --file source.file --tsr source.tsr
+</code></pre>
+<p>Validate the timestamp token signer certificate:</p>
+<pre><code>tsac --tsr source.tsr --cert /path/to/signer.crt
+</code></pre>
+<p>Validate the source data and the timestamp token signer certificate:</p>
+<pre><code>tsac --file source.file --tsr source.tsr --cert /path/to/signer.crt
+</code></pre>
+<h4 id="display-information">Display information</h4>
+<p>TSQ:</p>
+<pre><code>tsac --tsq source.tsq -tsqInfo
+</code></pre>
+<p>TSR:</p>
+<pre><code>tsac --tsr source.tsr -tsrInfo
+</code></pre>
+<p>Timestamp token:</p>
+<pre><code>tsac --token source.tst -tokenInfo
+</code></pre>
+<h4 id="advanced-usage">Advanced usage</h4>
+<p>For a full list of parameters and their descriptions (including more examples):</p>
+<pre><code>tsac -help
+</code></pre>
+<h3 id="library">Library</h3>
+<p>The library exports the static class <code>TSA</code>, which is a high level wrapper for the BouncyCastle-PCL API:</p>
+<pre><code class="lang-cs">using wan24.TSAClient;
+
+// Create a TSQ (using SHA512 and including the signer certificates)
+byte[] tsq = TSA.CreateRequest(&quot;source.file&quot;);
+
+// Request the TSR
+byte[] tsr = TSA.SendRequest(tsq, &quot;https://freetsa.org/tsr&quot;);
+
+// Validate the TSR
+TSA.ValidateResponse(tsq, tsr);
+
+// Validate the source data
+TSA.ValidateSourceTsr(&quot;source.file&quot;, tsr);
+
+// Extract the timestamp token
+byte[] token = TSA.ExtractToken(tsr);
+
+// Validate the source data using the timestamp token
+TSA.ValidateSourceToken(&quot;source.file&quot;, token);
+
+// Validate the timestamp token using the X509 signer certificate
+TSA.ValidateToken(token, &quot;/path/to/signer.crt&quot;);
+
+// Get object information
+foreach(string info in TSA.RequestInfo(tsq))
+    Console.WriteLine($&quot;TSQ: {info}&quot;);
+foreach(string info in TSA.ResponseInfo(tsr))
+    Console.WriteLine($&quot;TSR: {info}&quot;);
+foreach(string info in TSA.TokenInfo(token))
+    Console.WriteLine($&quot;Timestamp token: {info}&quot;);
+</code></pre>
+<p>All methods of the <code>TSA</code> class are XML documented.</p>
+<h2 id="good-to-know">Good to know</h2>
+<p>Existing target files will be overwritten!</p>
+<p>Per default <code>SHA512</code> is used as hash algorithm. All possible hash algorithms (to be specified using the <code>--algo [algorithm]</code> parameter):</p>
+<ul>
+<li><code>sha1</code></li>
+<li><code>sha256</code></li>
+<li><code>sha384</code></li>
+<li><code>sha512</code></li>
+</ul>
+<p>Of course the TSA needs to support the chosen hash algorithm, too!</p>
+<p>The TSA URI will get the TSQ as <code>application/timestamp-query</code> POST http request and needs to respond the TSR. If the TSA needs authentication f.e., you can use your own <code>HttpWebRequest</code> instance with a pre-configuration (only <code>ContentType</code> and <code>ContentLength</code> will be set when calling <code>SendRequest</code>):</p>
+<pre><code class="lang-cs">// Request the TSR with a custom request object
+using System.Net;
+HttpWebRequest req = (HttpWebRequest)WebRequest.Create(&quot;https://freetsa.org/tsr&quot;);
+// Configure req here...
+byte[] tsr = TSA.SendRequest(tsq, uri: null, req: req);
+</code></pre>
+<p>Find a <a href="https://gist.github.com/Manouchehri/fd754e402d98430243455713efada710">list of free TSA servers at GitHub</a>.</p>
+<h2 id="changes">Changes</h2>
+<h3 id="cli-tool-1">CLI tool</h3>
+<h4 id="version-1-2021-12-02">Version 1 (2021-12-02)</h4>
+<ul>
+<li>initial version</li>
+</ul>
+<h3 id="library-1">Library</h3>
+<h4 id="version-1-2021-12-02-1">Version 1 (2021-12-02)</h4>
+<ul>
+<li>initial version</li>
+</ul>
 </article>
           </div>
           
