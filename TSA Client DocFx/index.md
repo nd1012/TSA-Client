@@ -2,10 +2,10 @@
 
 The TSA Client contains two components:
 
-1. .NET 6 executeable CLI tool
+1. .NET 6 executable CLI tool
 2. .NET Standard 2.0 library
 
-Using [BouncyCastle-PCL](https://github.com/clairernovotny/BouncyCastle-PCL) it can create a TSQ and validate the TSR (RFC 3161) that comes from a third party SaaS TSA (like [freeTSA.org](https://freetsa.org)).
+Using [BouncyCastle-PCL](https://github.com/clairernovotny/BouncyCastle-PCL) it can create a TSQ and validate the TSR ([RFC 3161](https://www.ietf.org/rfc/rfc3161.txt)) that comes from a third party SaaS TSA (like [freeTSA.org](https://freetsa.org)).
 
 ## Basic usage
 
@@ -118,7 +118,7 @@ foreach(string info in TSA.TokenInfo(token))
     Console.WriteLine($"Timestamp token: {info}");
 ```
 
-All methods of the `TSA` class are XML documented.
+All methods of the `TSA` class are XML documented. Find the developer reference of the latest release [here](https://nd1012.github.io/TSA-Client/).
 
 ## Good to know
 

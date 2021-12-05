@@ -4,7 +4,7 @@ using System.Reflection;
 namespace wan24.TSAClient
 {
     /// <summary>
-    /// High level RFC 3161 TSA client helper methods (<seealso href="https://github.com/clairernovotny/BouncyCastle-PCL">BouncyCastle-PCL</seealso> wrapper)
+    /// High level <seealso href="https://www.ietf.org/rfc/rfc3161.txt">RFC 3161</seealso> TSA client helper methods (<seealso href="https://github.com/clairernovotny/BouncyCastle-PCL">BouncyCastle-PCL</seealso> wrapper)
     /// These helper methods support a third party SaaS TSA like <seealso href="https://freetsa.org">freeTSA.org</seealso>.
     /// Find a list of free TSA servers at <seealso href="https://gist.github.com/Manouchehri/fd754e402d98430243455713efada710">GitHub</seealso>.
     /// Find this open source project at <seealso href="https://github.com/nd1012/TSA-Client">GitHub</seealso>.

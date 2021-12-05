@@ -64,10 +64,10 @@
 
 <p>The TSA Client contains two components:</p>
 <ol>
-<li>.NET 6 executeable CLI tool</li>
+<li>.NET 6 executable CLI tool</li>
 <li>.NET Standard 2.0 library</li>
 </ol>
-<p>Using <a href="https://github.com/clairernovotny/BouncyCastle-PCL">BouncyCastle-PCL</a> it can create a TSQ and validate the TSR (RFC 3161) that comes from a third party SaaS TSA (like <a href="https://freetsa.org">freeTSA.org</a>).</p>
+<p>Using <a href="https://github.com/clairernovotny/BouncyCastle-PCL">BouncyCastle-PCL</a> it can create a TSQ and validate the TSR (<a href="https://www.ietf.org/rfc/rfc3161.txt">RFC 3161</a>) that comes from a third party SaaS TSA (like <a href="https://freetsa.org">freeTSA.org</a>).</p>
 <h2 id="basic-usage">Basic usage</h2>
 <h3 id="cli-tool">CLI tool</h3>
 <h4 id="create-timestamp">Create timestamp</h4>
@@ -141,7 +141,7 @@ foreach(string info in TSA.ResponseInfo(tsr))
 foreach(string info in TSA.TokenInfo(token))
     Console.WriteLine($&quot;Timestamp token: {info}&quot;);
 </code></pre>
-<p>All methods of the <code>TSA</code> class are XML documented.</p>
+<p>All methods of the <code>TSA</code> class are XML documented. Find the developer reference of the latest release <a href="https://nd1012.github.io/TSA-Client/">here</a>.</p>
 <h2 id="good-to-know">Good to know</h2>
 <p>Existing target files will be overwritten!</p>
 <p>Per default <code>SHA512</code> is used as hash algorithm. All possible hash algorithms (to be specified using the <code>--algo [algorithm]</code> parameter):</p>
