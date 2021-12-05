@@ -17,32 +17,27 @@
         public Arguments(string[] args)
         {
             if (args == null) throw new ArgumentNullException(nameof(args));
-            string? last = null, value;// Last key and current value
-            string key;// Current key
+            string? key = null, value;// Current key and value
             for (int i = 0; i < args.Length; i++)
             {
                 // Get key/value
                 if (args[i].StartsWith("--"))
                 {
                     // Key/value pair
-                    last = args[i][2..];
-                    if (i >= args.Length - 1) throw new InvalidDataException($"Missing value for {last}");
-                    key = last;
-                    value = args[i + 1];
-                    i++;
+                    key = args[i][2..];
+                    if (i >= args.Length - 1) throw new InvalidDataException($"Missing value for \"{key}\"");
+                    value = args[++i];
                 }
                 else if (args[i].StartsWith("-"))
                 {
                     // Flag
-                    last = null;
                     key = args[i][1..];
                     value = null;
                 }
                 else
                 {
                     // Multiple values
-                    if (last == null) throw new InvalidDataException($"Invalid usage at argument #{i}");
-                    key = last;
+                    if (key == null) throw new InvalidDataException($"Invalid usage at argument #{i + 1}");
                     value = args[i];
                 }
                 // Store parameter value
@@ -54,16 +49,15 @@
                 else if (Data[key] is List<string> values)
                 {
                     // Extend existing value list
-                    if (value == null) throw new InvalidDataException($"Mixing up parameter types for {key}");
-                    values.Add(value);
+                    values.Add(value ?? throw new InvalidDataException($"Mixing up parameter types for \"{key}\""));
                 }
                 else
                 {
                     // Convert existing value to value list
                     Data[key] = new List<string>()
                     {
-                        Data[key] as string??throw new InvalidDataException($"Mixing up parameter types for {key}"),
-                        value??throw new InvalidDataException($"Mixing up parameter types for {key}")
+                        Data[key] as string ?? throw new InvalidDataException($"Mixing up parameter types for \"{key}\""),
+                        value ?? throw new InvalidDataException($"Mixing up parameter types for \"{key}\"")
                     };
                 }
             }
@@ -73,7 +67,7 @@
         /// Get a value
         /// </summary>
         /// <param name="key">Key</param>
-        /// <returns>Value or <see langword="null"/> (if not contained) or an empty string (if the parameter was given as flag)</returns>
+        /// <returns>(First) value or <see langword="null"/> (if not contained) or an empty string (if the parameter was given as flag)</returns>
         public string? this[string key]
         {
             get
@@ -92,7 +86,7 @@
         /// <summary>
         /// Keys
         /// </summary>
-        public IEnumerable<string> Keys => Data.Keys;
+        public IEnumerable<string> Keys => Data.Keys.AsEnumerable();
 
         /// <summary>
         /// Determine if a parameter was given

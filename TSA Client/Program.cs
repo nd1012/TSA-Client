@@ -1,4 +1,6 @@
-﻿namespace wan24.TSAClient
+﻿using System.Diagnostics;
+
+namespace wan24.TSAClient
 {
     public static class Program
     {
@@ -7,6 +9,7 @@
             try
             {
                 Console.WriteLine($"TSA Client version #{Properties.Resources.VERSION} (library version #{TSA.VERSION}, BouncyCastle-PCL {TSA.BC_VERSION})");
+                Console.WriteLine();
                 // Interpret arguments
                 Arguments ARGS = new(args);
                 string? sourceFile = ARGS["file"];// Source filename
@@ -31,11 +34,9 @@
                 bool displayToken = ARGS.HasFlag("tokenInfo");// Display timestamp token information?
                 byte[]? tsq = null, tsr = null, token = null;// TSQ, TSR, timestamp token
                 int done = 0;// Number of actions done
-                bool help = ARGS.HasFlag("?") || ARGS.HasFlag("h") || ARGS.HasFlag("H") || ARGS.HasFlag("help");// Help requested?
                 // Display help
-                if (help)
+                if (ARGS.HasFlag("?") || ARGS.HasFlag("h") || ARGS.HasFlag("H") || ARGS.HasFlag("help"))
                 {
-                    Console.WriteLine();
                     Console.WriteLine(Properties.Resources.HELP.Trim());
                     return 0;
                 }
@@ -44,9 +45,9 @@
                 {
                     Console.WriteLine("Detected hash request");
                     if (sourceFile == null) throw new ArgumentException("Missing source file in parameter \"file\"");
-                    Console.WriteLine($"Create {algorithm} hash from {sourceFile}");
+                    Console.WriteLine($"Create \"{algorithm}\" hash from \"{sourceFile}\"");
                     sourceHash = TSA.CreateHash(sourceFile, algorithm);
-                    Console.WriteLine($"Using {algorithm} hash {BitConverter.ToString(sourceHash).Replace("-", string.Empty)}");
+                    Console.WriteLine($"Using \"{algorithm}\" hash \"{BitConverter.ToString(sourceHash).Replace("-", string.Empty)}\"");
                 }
                 // Create the TSR
                 if (tsaUri != null)
@@ -54,49 +55,42 @@
                     Console.WriteLine("Detected timestamp request");
                     if (tsqFile != null)
                     {
-                        if (!newTsq && File.Exists(tsqFile))
-                        {
-                            Console.WriteLine($"Use existing TSQ from {tsqFile}");
-                            tsq = File.ReadAllBytes(tsqFile);
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Create TSQ to {tsqFile} (include certificates: {includeCert})");
-                            tsq = TSA.CreateRequest(sourceHash, tsqFile, includeCert);
-                        }
+                        bool existing = !newTsq && File.Exists(tsqFile);
+                        Console.WriteLine(existing ? $"Use existing TSQ from \"{tsqFile}\"" : $"Create TSQ to \"{tsqFile}\" (include certificates: {includeCert})");
+                        tsq = existing ? File.ReadAllBytes(tsqFile) : TSA.CreateRequest(sourceHash, tsqFile, includeCert);
                     }
                     else
                     {
                         Console.WriteLine("Create TSQ (include certificates: {includeCert})");
                         tsq = TSA.CreateRequest(sourceHash, includeCert: includeCert);
                     }
-                    Console.WriteLine(tsrFile == null ? "Request TSR" : $"Create TSR to {tsrFile}");
+                    Console.WriteLine(tsrFile == null ? "Request TSR" : $"Create TSR to \"{tsrFile}\"");
                     tsr = TSA.SendRequest(tsq, tsaUri, tsrFile);
                     Console.WriteLine("Validate TSR");
                     TSA.ValidateResponse(tsq, tsr);
-                    Console.WriteLine(tokenFile == null ? "Extract timestamp token" : $"Save timestamp token to {tokenFile}");
+                    Console.WriteLine(tokenFile == null ? "Extract timestamp token" : $"Save timestamp token to \"{tokenFile}\"");
                     token = TSA.ExtractToken(tsr, tokenFile);
                     done++;
                 }
                 // Load a timestamp token
                 if (token == null && tokenFile != null)
                 {
-                    Console.WriteLine($"Loading timestamp token from {tokenFile}");
+                    Console.WriteLine($"Loading timestamp token from \"{tokenFile}\"");
                     token = File.ReadAllBytes(tokenFile);
                 }
                 // Validate the TSR
                 if (tsaUri == null && tsrFile != null && tsqFile != null)
                 {
                     Console.WriteLine("Detected TSR validation request");
-                    Console.WriteLine($"Using TSR from {tsrFile}");
+                    Console.WriteLine($"Using TSR from \"{tsrFile}\"");
                     tsr = File.ReadAllBytes(tsrFile);
-                    Console.WriteLine($"Using TSQ from {tsqFile}");
+                    Console.WriteLine($"Using TSQ from \"{tsqFile}\"");
                     tsq = File.ReadAllBytes(tsqFile);
                     Console.WriteLine("Validate TSR");
                     TSA.ValidateResponse(tsq, tsr);
                     if (token == null)
                     {
-                        Console.WriteLine(tokenFile == null ? "Extract timestamp token" : $"Save timestamp token to {tokenFile}");
+                        Console.WriteLine(tokenFile == null ? "Extract timestamp token" : $"Save timestamp token to \"{tokenFile}\"");
                         token = TSA.ExtractToken(tsr, tokenFile);
                     }
                     done++;
@@ -105,9 +99,9 @@
                 if (tsaUri == null && tsrFile != null && tokenFile != null && tsqFile == null)
                 {
                     Console.WriteLine("Detected timestamp token from TSR extraction request");
-                    Console.WriteLine($"Using TSR from {tsrFile}");
+                    Console.WriteLine($"Using TSR from \"{tsrFile}\"");
                     tsr = File.ReadAllBytes(tsrFile);
-                    Console.WriteLine($"Save timestamp token to {tokenFile}");
+                    Console.WriteLine($"Save timestamp token to \"{tokenFile}\"");
                     token = TSA.ExtractToken(tsr, tokenFile);
                     done++;
                 }
@@ -119,7 +113,7 @@
                     if (tsr == null)
                     {
                         if (tsrFile == null) throw new ArgumentException("Missing TSR filename in parameter \"tsr\"");
-                        Console.WriteLine($"Validate source using TSR {tsrFile}");
+                        Console.WriteLine($"Validate source using TSR \"{tsrFile}\"");
                         TSA.ValidateSourceTsr(tsrFile, sourceHash);
                     }
                     else
@@ -134,7 +128,7 @@
                 {
                     Console.WriteLine("Detected timestamp token validation request");
                     if (token == null) throw new ArgumentException("Missing timestamp token filename in parameter \"token\"");
-                    Console.WriteLine($"Validate timestamp token using certificate {certFile}");
+                    Console.WriteLine($"Validate timestamp token using certificate \"{certFile}\"");
                     TSA.ValidateToken(token, certFile);
                     done++;
                 }
@@ -142,18 +136,8 @@
                 if (displayTsq)
                 {
                     Console.WriteLine("Begin TSQ information:");
-                    if (tsq != null)
-                    {
-                        foreach (string info in TSA.RequestInfo(tsq)) Console.WriteLine(info);
-                    }
-                    else if (tsqFile != null)
-                    {
-                        foreach (string info in TSA.RequestInfo(tsqFile)) Console.WriteLine(info);
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Missing TSQ filename in parameter \"tsq\"");
-                    }
+                    if (tsq == null && tsqFile == null) throw new ArgumentException("Missing TSQ filename in parameter \"tsq\"");
+                    foreach (string info in tsq != null ? TSA.RequestInfo(tsq) : TSA.RequestInfo(tsqFile)) Console.WriteLine(info);
                     Console.WriteLine("End TSQ information");
                     done++;
                 }
@@ -161,18 +145,8 @@
                 if (displayTsr)
                 {
                     Console.WriteLine("Begin TSR information:");
-                    if (tsr != null)
-                    {
-                        foreach (string info in TSA.ResponseInfo(tsr)) Console.WriteLine(info);
-                    }
-                    else if (tsrFile != null)
-                    {
-                        foreach (string info in TSA.ResponseInfo(tsrFile)) Console.WriteLine(info);
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Missing TSR filename in parameter \"tsr\"");
-                    }
+                    if (tsr == null && tsrFile == null) throw new ArgumentException("Missing TSR filename in parameter \"tsr\"");
+                    foreach (string info in tsr != null ? TSA.ResponseInfo(tsr) : TSA.ResponseInfo(tsrFile)) Console.WriteLine(info);
                     Console.WriteLine("End TSR information");
                     done++;
                 }
@@ -189,7 +163,6 @@
                 if (done < 1)
                 {
                     Console.Error.WriteLine("Nothing to do?!");
-                    Console.WriteLine();
                     Console.WriteLine(Properties.Resources.HELP.Trim());
                     return 1;
                 }
@@ -200,18 +173,21 @@
             {
                 // Invalid usage
                 Console.Error.WriteLine(ex);
+                Debugger.Break();
                 return 1;
             }
             catch(InvalidDataException ex)
             {
                 // Invalid data (f.e. validation failed)
                 Console.Error.WriteLine(ex);
+                Debugger.Break();
                 return 2;
             }
             catch(Exception ex)
             {
                 // Unknown error
                 Console.Error.WriteLine(ex);
+                Debugger.Break();
                 return 99;
             }
         }
